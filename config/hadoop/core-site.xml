@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Configuration principale de Hadoop - Core Site -->
+<!-- Définit les paramètres fondamentaux du cluster Hadoop -->
+
+<configuration>
+    <!-- URI du système de fichiers par défaut - NameNode -->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://hadoop-master:9000</value>
+        <description>
+            L'URI du système de fichiers par défaut. 
+            Tous les chemins relatifs seront résolus par rapport à cette URI.
+            Le NameNode écoute sur le port 9000 pour les connexions clients HDFS.
+        </description>
+    </property>
+
+    <!-- Répertoire temporaire Hadoop -->
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/opt/hadoop/data/tmp</value>
+        <description>
+            Répertoire de base pour les fichiers temporaires.
+            Doit être accessible en lecture/écriture par l'utilisateur Hadoop.
+        </description>
+    </property>
+
+    <!-- Configuration des utilisateurs autorisés -->
+    <property>
+        <name>hadoop.proxyuser.hadoop.hosts</name>
+        <value>*</value>
+        <description>
+            Permet à l'utilisateur 'hadoop' de se connecter depuis n'importe quel host.
+            En production, cette valeur devrait être plus restrictive.
+        </description>
+    </property>
+
+    <property>
+        <name>hadoop.proxyuser.hadoop.groups</name>
+        <value>*</value>
+        <description>
+            Permet à l'utilisateur 'hadoop' d'agir pour tous les groupes.
+            Nécessaire pour les opérations inter-services.
+        </description>
+    </property>
+
+    <!-- Configuration de sécurité simple -->
+    <property>
+        <name>hadoop.security.authentication</name>
+        <value>simple</value>
+        <description>
+            Mode d'authentification. 'simple' = pas de Kerberos.
+            Pour la production, utiliser 'kerberos' pour plus de sécurité.
+        </description>
+    </property>
+
+    <!-- Taille du buffer d'I/O -->
+    <property>
+        <name>io.file.buffer.size</name>
+        <value>131072</value>
+        <description>
+            Taille du buffer pour les opérations d'I/O en octets (128KB).
+            Une valeur plus élevée améliore les performances mais utilise plus de mémoire.
+        </description>
+    </property>
+
+    <!-- Configuration MongoDB Connector -->
+    <property>
+        <name>mongo.input.uri</name>
+        <value>mongodb://admin:bigdata2025@mongodb:27017/bigdata.sales</value>
+        <description>
+            URI de connexion MongoDB pour l'ingestion de données.
+            Utilisé par le connecteur Hadoop-MongoDB.
+        </description>
+    </property>
+
+    <property>
+        <name>mongo.output.uri</name>
+        <value>mongodb://admin:bigdata2025@mongodb:27017/bigdata.results</value>
+        <description>
+            URI de connexion MongoDB pour l'écriture des résultats.
+        </description>
+    </property>
+
+    <!-- Configuration des codecs de compression -->
+    <property>
+        <name>io.compression.codecs</name>
+        <value>org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.BZip2Codec,org.apache.hadoop.io.compress.SnappyCodec</value>
+        <description>
+            Liste des codecs de compression disponibles.
+            Permet d'optimiser le stockage et les transferts réseau.
+        </description>
+    </property>
+
+    <!-- Garbage Collection optimisé pour Big Data -->
+    <property>
+        <name>hadoop.common.configuration.version</name>
+        <value>3.3.4.0</value>
+        <description>Version de configuration pour compatibilité</description>
+    </property>
+
+</configuration>

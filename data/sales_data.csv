@@ -1,0 +1,51 @@
+transaction_id,product_id,product_name,category,quantity,unit_price,total_amount,customer_id,customer_name,sale_date,region,salesperson
+T001,P101,Laptop Pro,Electronics,2,1299.99,2599.98,C001,Alice Johnson,2024-08-01,North America,John Doe
+T002,P102,Smartphone X,Electronics,1,899.99,899.99,C002,Bob Smith,2024-08-01,Europe,Jane Smith
+T003,P103,Tablet Plus,Electronics,3,499.99,1499.97,C003,Carol Davis,2024-08-02,Europe,Mike Johnson
+T004,P201,Office Chair,Furniture,1,299.99,299.99,C004,David Wilson,2024-08-02,Asia,Sarah Lee
+T005,P202,Standing Desk,Furniture,2,599.99,1199.98,C005,Eve Brown,2024-08-03,Asia,Tom Wilson
+T006,P301,Coffee Maker,Appliances,1,149.99,149.99,C006,Frank Miller,2024-08-03,North America,Lisa Brown
+T007,P302,Blender Pro,Appliances,1,99.99,99.99,C007,Grace Lee,2024-08-04,North America,John Doe
+T008,P101,Laptop Pro,Electronics,1,1299.99,1299.99,C008,Henry Taylor,2024-08-04,Asia,Sarah Lee
+T009,P401,Running Shoes,Sports,2,129.99,259.98,C009,Iris Chen,2024-08-05,Asia,Tom Wilson
+T010,P402,Yoga Mat,Sports,1,49.99,49.99,C010,Jack Anderson,2024-08-05,North America,Mike Johnson
+T011,P501,Winter Jacket,Clothing,1,199.99,199.99,C011,Kate Thompson,2024-08-06,Europe,Jane Smith
+T012,P502,Jeans Classic,Clothing,3,79.99,239.97,C012,Liam O'Connor,2024-08-06,Europe,Lisa Brown
+T013,P103,Tablet Plus,Electronics,1,499.99,499.99,C013,Mia Rodriguez,2024-08-07,Europe,Mike Johnson
+T014,P201,Office Chair,Furniture,2,299.99,599.98,C014,Noah Kim,2024-08-07,Asia,Sarah Lee
+T015,P301,Coffee Maker,Appliances,1,149.99,149.99,C015,Olivia Martinez,2024-08-08,Europe,Jane Smith
+T016,P102,Smartphone X,Electronics,2,899.99,1799.98,C016,Paul Nguyen,2024-08-08,Asia,Tom Wilson
+T017,P401,Running Shoes,Sports,1,129.99,129.99,C017,Quinn Zhang,2024-08-09,Asia,Sarah Lee
+T018,P202,Standing Desk,Furniture,1,599.99,599.99,C018,Rachel Green,2024-08-09,North America,John Doe
+T019,P302,Blender Pro,Appliances,2,99.99,199.98,C019,Sam Patel,2024-08-10,Europe,Lisa Brown
+T020,P501,Winter Jacket,Clothing,1,199.99,199.99,C020,Tina Wang,2024-08-10,Asia,Tom Wilson
+T021,P101,Laptop Pro,Electronics,1,1299.99,1299.99,C021,Uma Singh,2024-08-11,Asia,Sarah Lee
+T022,P402,Yoga Mat,Sports,3,49.99,149.97,C022,Victor Hugo,2024-08-11,South America,Carlos Rodriguez
+T023,P502,Jeans Classic,Clothing,2,79.99,159.98,C023,Wendy Liu,2024-08-12,Asia,Tom Wilson
+T024,P103,Tablet Plus,Electronics,1,499.99,499.99,C024,Xavier Costa,2024-08-12,Europe,Mike Johnson
+T025,P201,Office Chair,Furniture,1,299.99,299.99,C025,Yuki Tanaka,2024-08-13,Asia,Sarah Lee
+T026,P301,Coffee Maker,Appliances,2,149.99,299.98,C026,Zoe Adams,2024-08-13,North America,John Doe
+T027,P102,Smartphone X,Electronics,1,899.99,899.99,C027,Alex Kumar,2024-08-14,Asia,Tom Wilson
+T028,P401,Running Shoes,Sports,1,129.99,129.99,C028,Betty Ford,2024-08-14,North America,Lisa Brown
+T029,P202,Standing Desk,Furniture,1,599.99,599.99,C029,Carlos Ruiz,2024-08-15,South America,Carlos Rodriguez
+T030,P302,Blender Pro,Appliances,1,99.99,99.99,C030,Diana Prince,2024-08-15,North America,Mike Johnson
+T031,P501,Winter Jacket,Clothing,2,199.99,399.98,C031,Eric Johnson,2024-08-16,North America,John Doe
+T032,P101,Laptop Pro,Electronics,1,1299.99,1299.99,C032,Fiona Shaw,2024-08-16,North America,Lisa Brown
+T033,P402,Yoga Mat,Sports,1,49.99,49.99,C033,George Miller,2024-08-17,Oceania,Emma Davis
+T034,P502,Jeans Classic,Clothing,1,79.99,79.99,C034,Hannah Scott,2024-08-17,Oceania,Emma Davis
+T035,P103,Tablet Plus,Electronics,2,499.99,999.98,C035,Ian McKenzie,2024-08-18,Africa,Ahmed Hassan
+T036,P201,Office Chair,Furniture,1,299.99,299.99,C036,Julia Roberts,2024-08-18,North America,Mike Johnson
+T037,P301,Coffee Maker,Appliances,1,149.99,149.99,C037,Kevin Park,2024-08-19,North America,John Doe
+T038,P102,Smartphone X,Electronics,1,899.99,899.99,C038,Luna Gonzalez,2024-08-19,North America,Lisa Brown
+T039,P401,Running Shoes,Sports,2,129.99,259.98,C039,Mike Chen,2024-08-20,North America,Mike Johnson
+T040,P202,Standing Desk,Furniture,1,599.99,599.99,C040,Nina Patel,2024-08-20,North America,John Doe
+T041,P302,Blender Pro,Appliances,3,99.99,299.97,C041,Oscar Williams,2024-08-21,North America,Lisa Brown
+T042,P501,Winter Jacket,Clothing,1,199.99,199.99,C042,Penny Lane,2024-08-21,North America,Mike Johnson
+T043,P101,Laptop Pro,Electronics,1,1299.99,1299.99,C043,Quincy Jones,2024-08-22,North America,John Doe
+T044,P402,Yoga Mat,Sports,2,49.99,99.98,C044,Rosa Parks,2024-08-22,North America,Lisa Brown
+T045,P502,Jeans Classic,Clothing,1,79.99,79.99,C045,Steve Jobs,2024-08-23,North America,Mike Johnson
+T046,P103,Tablet Plus,Electronics,1,499.99,499.99,C046,Tara Reid,2024-08-23,North America,John Doe
+T047,P201,Office Chair,Furniture,2,299.99,599.98,C047,Umar Khan,2024-08-24,North America,Lisa Brown
+T048,P301,Coffee Maker,Appliances,1,149.99,149.99,C048,Vera Wang,2024-08-24,North America,Mike Johnson
+T049,P102,Smartphone X,Electronics,2,899.99,1799.98,C049,Will Smith,2024-08-25,North America,John Doe
+T050,P401,Running Shoes,Sports,1,129.99,129.99,C050,Xena Warrior,2024-08-25,North America,Lisa Brown

@@ -1,0 +1,51 @@
+id,name,age,city,salary,department,hire_date,status
+1,Alice Johnson,28,New York,75000,Engineering,2021-03-15,Active
+2,Bob Smith,35,London,82000,Marketing,2020-07-22,Active
+3,Carol Davis,31,Paris,68000,Finance,2019-11-08,Active
+4,David Wilson,42,Tokyo,95000,Engineering,2018-05-12,Active
+5,Eve Brown,26,Sydney,58000,HR,2022-01-30,Active
+6,Frank Miller,39,Berlin,71000,Marketing,2017-09-14,Active
+7,Grace Lee,33,Toronto,86000,Engineering,2020-12-03,Active
+8,Henry Taylor,29,Mumbai,63000,Finance,2021-06-18,Active
+9,Iris Chen,37,Singapore,79000,Marketing,2019-02-25,Active
+10,Jack Anderson,45,São Paulo,92000,Engineering,2016-08-07,Active
+11,Kate Thompson,32,Mexico City,69000,HR,2020-10-11,Active
+12,Liam O'Connor,28,Dublin,66000,Finance,2021-12-01,Active
+13,Mia Rodriguez,30,Madrid,73000,Marketing,2019-07-19,Active
+14,Noah Kim,41,Seoul,88000,Engineering,2018-03-26,Active
+15,Olivia Martinez,27,Barcelona,61000,HR,2022-05-14,Active
+16,Paul Nguyen,36,Ho Chi Minh,76000,Finance,2017-11-29,Active
+17,Quinn Zhang,34,Shanghai,84000,Engineering,2019-09-05,Active
+18,Rachel Green,29,Los Angeles,67000,Marketing,2021-04-12,Active
+19,Sam Patel,38,London,81000,Finance,2018-12-18,Active
+20,Tina Wang,31,Beijing,78000,Engineering,2020-02-08,Active
+21,Uma Singh,26,Delhi,59000,HR,2022-03-22,Inactive
+22,Victor Hugo,43,Rio de Janeiro,89000,Marketing,2017-01-15,Active
+23,Wendy Liu,35,Hong Kong,85000,Engineering,2019-06-30,Active
+24,Xavier Costa,40,Lisbon,74000,Finance,2018-08-14,Active
+25,Yuki Tanaka,32,Osaka,72000,HR,2020-11-27,Active
+26,Zoe Adams,28,Chicago,65000,Marketing,2021-09-09,Active
+27,Alex Kumar,37,Bangalore,83000,Engineering,2018-04-03,Active
+28,Betty Ford,31,Detroit,70000,Finance,2020-01-16,Active
+29,Carlos Ruiz,29,Buenos Aires,62000,HR,2021-11-23,Active
+30,Diana Prince,44,Washington,94000,Marketing,2016-12-05,Active
+31,Eric Johnson,33,Seattle,77000,Engineering,2019-10-17,Active
+32,Fiona Shaw,27,Vancouver,64000,Finance,2022-02-28,Active
+33,George Miller,39,Melbourne,80000,HR,2018-07-11,Active
+34,Hannah Scott,30,Auckland,68000,Marketing,2021-08-04,Active
+35,Ian McKenzie,36,Cape Town,82000,Engineering,2017-05-20,Active
+36,Julia Roberts,32,Miami,75000,Finance,2020-06-13,Inactive
+37,Kevin Park,41,San Francisco,91000,Marketing,2018-01-28,Active
+38,Luna Gonzalez,28,Phoenix,66000,HR,2021-10-15,Active
+39,Mike Chen,35,Las Vegas,78000,Engineering,2019-03-08,Active
+40,Nina Patel,33,Atlanta,73000,Finance,2020-09-21,Active
+41,Oscar Williams,37,Boston,85000,Marketing,2017-12-10,Active
+42,Penny Lane,29,Nashville,67000,HR,2021-07-06,Active
+43,Quincy Jones,42,Denver,88000,Engineering,2018-11-19,Active
+44,Rosa Parks,31,Philadelphia,71000,Finance,2020-04-02,Active
+45,Steve Jobs,38,San Jose,93000,Marketing,2017-03-17,Active
+46,Tara Reid,26,Portland,60000,HR,2022-06-24,Active
+47,Umar Khan,34,Houston,79000,Engineering,2019-01-12,Active
+48,Vera Wang,30,Dallas,69000,Finance,2021-05-29,Active
+49,Will Smith,40,Orlando,86000,Marketing,2018-09-15,Active
+50,Xena Warrior,35,Tampa,81000,Engineering,2017-10-08,Active

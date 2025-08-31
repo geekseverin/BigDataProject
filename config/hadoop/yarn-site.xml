@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Configuration YARN - Yet Another Resource Negotiator -->
+<!-- Gestionnaire de ressources et d'ordonnancement des applications -->
+
+<configuration>
+    <!-- Configuration du ResourceManager -->
+    <property>
+        <n>yarn.resourcemanager.hostname</n>
+        <value>hadoop-master</value>
+        <description>
+            Hostname du ResourceManager.
+            Point central de coordination pour tous les NodeManagers.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.resourcemanager.address</n>
+        <value>hadoop-master:8032</value>
+        <description>
+            Adresse du ResourceManager pour les clients.
+            Port utilisé par les applications pour soumettre des jobs.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.resourcemanager.scheduler.address</n>
+        <value>hadoop-master:8030</value>
+        <description>
+            Adresse du scheduler YARN.
+            Communication entre ResourceManager et ApplicationMasters.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.resourcemanager.resource-tracker.address</n>
+        <value>hadoop-master:8031</value>
+        <description>
+            Adresse pour le tracking des ressources.
+            Communication avec les NodeManagers.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.resourcemanager.admin.address</n>
+        <value>hadoop-master:8033</value>
+        <description>Interface d'administration du ResourceManager.</description>
+    </property>
+
+    <property>
+        <n>yarn.resourcemanager.webapp.address</n>
+        <value>hadoop-master:8088</value>
+        <description>
+            Interface web du ResourceManager.
+            Dashboard pour surveiller les applications et ressources.
+        </description>
+    </property>
+
+    <!-- Configuration des NodeManagers -->
+    <property>
+        <n>yarn.nodemanager.aux-services</n>
+        <value>mapreduce_shuffle</value>
+        <description>
+            Services auxiliaires des NodeManagers.
+            mapreduce_shuffle nécessaire pour les jobs MapReduce.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.nodemanager.aux-services.mapreduce_shuffle.class</n>
+        <value>org.apache.hadoop.mapred.ShuffleHandler</value>
+        <description>Classe Java pour le service shuffle MapReduce.</description>
+    </property>
+
+    <!-- Configuration des ressources -->
+    <property>
+        <n>yarn.nodemanager.resource.memory-mb</n>
+        <value>4096</value>
+        <description>
+            Mémoire totale disponible sur chaque NodeManager en MB.
+            Ajuster selon la RAM disponible sur les machines.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.scheduler.maximum-allocation-mb</n>
+        <value>4096</value>
+        <description>
+            Allocation mémoire maximale par conteneur.
+            Ne peut pas dépasser yarn.nodemanager.resource.memory-mb.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.scheduler.minimum-allocation-mb</n>
+        <value>512</value>
+        <description>
+            Allocation mémoire minimale par conteneur.
+            Granularité d'allocation des ressources.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.nodemanager.resource.cpu-vcores</n>
+        <value>4</value>
+        <description>
+            Nombre de vCores disponibles sur chaque NodeManager.
+            Généralement égal au nombre de cœurs CPU.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.scheduler.maximum-allocation-vcores</n>
+        <value>4</value>
+        <description>Allocation maximale de vCores par conteneur.</description>
+    </property>
+
+    <!-- Configuration du scheduler -->
+    <property>
+        <n>yarn.resourcemanager.scheduler.class</n>
+        <value>org.apache.hadoop.yarn.server.resourcemanager.scheduler.capacity.CapacityScheduler</value>
+        <description>
+            Scheduler YARN utilisé.
+            CapacityScheduler : partage des ressources par queues avec garanties.
+            Alternative : FairScheduler pour partage équitable.
+        </description>
+    </property>
+
+    <!-- Configuration des logs -->
+    <property>
+        <n>yarn.log-aggregation-enable</n>
+        <value>true</value>
+        <description>
+            Active l'agrégation des logs d'application.
+            Les logs sont collectés et stockés dans HDFS après fin d'exécution.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.log.server.url</n>
+        <value>http://hadoop-master:19888/jobhistory/logs</value>
+        <description>URL du serveur de logs pour consultation via web.</description>
+    </property>
+
+    <!-- Répertoires locaux NodeManager -->
+    <property>
+        <n>yarn.nodemanager.local-dirs</n>
+        <value>/opt/hadoop/data/yarn/local</value>
+        <description>
+            Répertoires locaux pour les données temporaires des applications.
+            Stockage des conteneurs et données intermédiaires.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.nodemanager.log-dirs</n>
+        <value>/opt/hadoop/data/yarn/logs</value>
+        <description>Répertoires pour les logs des applications sur les NodeManagers.</description>
+    </property>
+
+    <!-- Configuration réseau -->
+    <property>
+        <n>yarn.nodemanager.bind-host</n>
+        <value>0.0.0.0</value>
+        <description>
+            Interface réseau pour les NodeManagers.
+            0.0.0.0 = écoute sur toutes les interfaces.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.nodemanager.webapp.address</n>
+        <value>0.0.0.0:8042</value>
+        <description>Interface web des NodeManagers.</description>
+    </property>
+
+    <!-- Configuration de sécurité -->
+    <property>
+        <n>yarn.nodemanager.delete.debug-delay-sec</n>
+        <value>600</value>
+        <description>
+            Délai avant suppression des répertoires de debug (10 minutes).
+            Utile pour le débogage des applications échouées.
+        </description>
+    </property>
+
+    <!-- Configuration des conteneurs */ -->
+    <property>
+        <n>yarn.nodemanager.container-executor.class</n>
+        <value>org.apache.hadoop.yarn.server.nodemanager.DefaultContainerExecutor</value>
+        <description>
+            Exécuteur des conteneurs.
+            DefaultContainerExecutor : exécution simple sans isolation avancée.
+        </description>
+    </property>
+
+    <!-- Configuration des applications -->
+    <property>
+        <n>yarn.application.classpath</n>
+        <value>$HADOOP_HOME/etc/hadoop:$HADOOP_HOME/share/hadoop/common/lib/*:$HADOOP_HOME/share/hadoop/common/*:$HADOOP_HOME/share/hadoop/hdfs:$HADOOP_HOME/share/hadoop/hdfs/lib/*:$HADOOP_HOME/share/hadoop/hdfs/*:$HADOOP_HOME/share/hadoop/mapreduce/lib/*:$HADOOP_HOME/share/hadoop/mapreduce/*:$HADOOP_HOME/share/hadoop/yarn:$HADOOP_HOME/share/hadoop/yarn/lib/*:$HADOOP_HOME/share/hadoop/yarn/*</value>
+        <description>
+            Classpath pour les applications YARN.
+            Inclut toutes les librairies Hadoop nécessaires.
+        </description>
+    </property>
+
+    <!-- Configuration du Timeline Service -->
+    <property>
+        <n>yarn.timeline-service.enabled</n>
+        <value>false</value>
+        <description>
+            Timeline Service pour l'historique des applications.
+            Désactivé pour simplifier la configuration de développement.
+        </description>
+    </property>
+
+    <!-- Configuration des ressources étendues -->
+    <property>
+        <n>yarn.nodemanager.vmem-check-enabled</n>
+        <value>false</value>
+        <description>
+            Désactive la vérification de la mémoire virtuelle.
+            Évite les erreurs avec des applications utilisant beaucoup de mémoire virtuelle.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.nodemanager.pmem-check-enabled</n>
+        <value>true</value>
+        <description>
+            Active la vérification de la mémoire physique.
+            Importante pour éviter l'épuisement des ressources.
+        </description>
+    </property>
+
+</configuration>

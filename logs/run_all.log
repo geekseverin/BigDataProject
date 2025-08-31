@@ -1,0 +1,23 @@
+[2025-08-30 22:03:28] === DÉMARRAGE DU DÉPLOIEMENT ===
+[2025-08-30 22:03:28] Prérequis vérifiés avec succès
+#0 building with "default" instance using docker driver
+
+#1 [hadoop-base internal] load build definition from Dockerfile
+#1 transferring dockerfile: 3.94kB done
+#1 DONE 0.0s
+
+#2 [hadoop-base internal] load metadata for docker.io/library/ubuntu:22.04
+#2 DONE 10.5s
+
+#3 [hadoop-base internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [hadoop-base  1/12] FROM docker.io/library/ubuntu:22.04@sha256:1aa979d85661c488ce030ac292876cf6ed04535d3a237e49f61542d8e5de5ae0
+#4 resolve docker.io/library/ubuntu:22.04@sha256:1aa979d85661c488ce030ac292876cf6ed04535d3a237e49f61542d8e5de5ae0 0.0s done
+#4 sha256:1aa979d85661c488ce030ac292876cf6ed04535d3a237e49f61542d8e5de5ae0 6.69kB / 6.69kB done
+#4 sha256:1f809e07a0402375e7b2ede95e4c43f5605a83c447d1a4ca9c9d3c4194440104 424B / 424B done
+#4 sha256:8a4eacce82dfd41dd9dfb4473188b4a728a35a75c121e4c5387dda2930ea0063 2.30kB / 2.30kB done
+#4 DONE 0.0s
+
+#5 [hadoop-base  2/12] RUN apt-get update && apt-get install -y     openjdk-8-jdk     wget     curl     ssh     rsync     vim     net-tools     iputils-ping     python3     python3-pip     && apt-get clean     && rm -rf /var/lib/apt/lists/*

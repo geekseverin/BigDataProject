@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Configuration MapReduce - Framework de traitement distribué -->
+<!-- Paramètres pour l'exécution des jobs MapReduce sur YARN -->
+
+<configuration>
+    <!-- Framework MapReduce - utilisation de YARN -->
+    <property>
+        <n>mapreduce.framework.name</n>
+        <value>yarn</value>
+        <description>
+            Framework d'exécution pour MapReduce.
+            'yarn' utilise YARN comme gestionnaire de ressources.
+            Alternative : 'local' pour tests unitaires.
+        </description>
+    </property>
+
+    <!-- Adresse du JobHistory Server -->
+    <property>
+        <n>mapreduce.jobhistory.address</n>
+        <value>hadoop-master:10020</value>
+        <description>
+            Adresse du JobHistory Server pour l'historique des jobs.
+            Permet de consulter les logs et statistiques des jobs terminés.
+        </description>
+    </property>
+
+    <property>
+        <n>mapreduce.jobhistory.webapp.address</n>
+        <value>hadoop-master:19888</value>
+        <description>
+            Interface web du JobHistory Server.
+            Accessible pour consulter l'historique via navigateur.
+        </description>
+    </property>
+
+    <!-- Configuration des tâches Map -->
+    <property>
+        <n>mapreduce.map.memory.mb</n>
+        <value>1024</value>
+        <description>
+            Mémoire allouée à chaque tâche Map en MB.
+            Doit être inférieure à yarn.scheduler.maximum-allocation-mb.
+        </description>
+    </property>
+
+    <property>
+        <n>mapreduce.map.java.opts</n>
+        <value>-Xmx819m</value>
+        <description>
+            Options JVM pour les tâches Map.
+            Généralement 80% de mapreduce.map.memory.mb pour éviter l'OOM.
+        </description>
+    </property>
+
+    <!-- Configuration des tâches Reduce -->
+    <property>
+        <n>mapreduce.reduce.memory.mb</n>
+        <value>2048</value>
+        <description>
+            Mémoire allouée à chaque tâche Reduce en MB.
+            Plus élevée car Reduce agrège les données de plusieurs Maps.
+        </description>
+    </property>
+
+    <property>
+        <n>mapreduce.reduce.java.opts</n>
+        <value>-Xmx1638m</value>
+        <description>
+            Options JVM pour les tâches Reduce.
+            80% de mapreduce.reduce.memory.mb.
+        </description>
+    </property>
+
+    <!-- Configuration de l'ApplicationMaster -->
+    <property>
+        <n>yarn.app.mapreduce.am.resource.mb</n>
+        <value>1024</value>
+        <description>
+            Mémoire pour l'ApplicationMaster MapReduce.
+            Coordonne l'exécution des tâches Map/Reduce.
+        </description>
+    </property>
+
+    <property>
+        <n>yarn.app.mapreduce.am.command-opts</n>
+        <value>-Xmx819m</value>
+        <description>Options JVM pour l'ApplicationMaster.</description>
+    </property>
+
+    <!-- Répertoire temporaire pour shuffle -->
+    <property>
+        <n>mapreduce.cluster.local.dir</n>
+        <value>/opt/hadoop/data/mapred/local</value>
+        <description>
+            Répertoires locaux pour les données temporaires MapReduce.
+            Utilisé pendant la phase shuffle entre Map et Reduce.
+        </description>
+    </property>
+
+    <!-- Configuration des logs d'application -->
+    <property>
+        <n>yarn.app.mapreduce.am.log.level</n>
+        <value>INFO</value>
+        <description>
+            Niveau de log pour l'ApplicationMaster.
+            Options : FATAL, ERROR, WARN, INFO, DEBUG, TRACE.
+        </description>
+    </property>
+
+    <!-- Configuration du shuffle -->
+    <property>
+        <n>mapreduce.task.io.sort.mb</n>
+        <value>256</value>
+        <description>
+            Taille du buffer de tri en mémoire pour les tâches Map.
+            Plus grand buffer = moins d'écritures disque mais plus de RAM.
+        </description>
+    </property>
+
+    <property>
+        <n>mapreduce.map.sort.spill.percent</n>
+        <value>0.8</value>
+        <description>
+            Pourcentage du buffer de tri avant écriture sur disque.
+            0.8 = écriture quand le buffer est plein à 80%.
+        </description>
+    </property>
+
+    <!-- Compression des données intermédiaires -->
+    <property>
+        <n>mapreduce.map.output.compress</n>
+        <value>true</value>
+        <description>
+            Compression des sorties Map pour réduire le trafic réseau.
+            Améliore les performances sur les gros datasets.
+        </description>
+    </property>
+
+    <property>
+        <n>mapreduce.map.output.compress.codec</n>
+        <value>org.apache.hadoop.io.compress.SnappyCodec</value>
+        <description>
+            Codec de compression pour les données Map.
+            Snappy : bon compromis vitesse/taux de compression.
+        </description>
+    </property>
+
+    <!-- Configuration des tentatives de retry -->
+    <property>
+        <n>mapreduce.map.maxattempts</n>
+        <value>3</value>
+        <description>Nombre maximum de tentatives pour une tâche Map en échec.</description>
+    </property>
+
+    <property>
+        <n>mapreduce.reduce.maxattempts</n>
+        <value>3</value>
+        <description>Nombre maximum de tentatives pour une tâche Reduce en échec.</description>
+    </property>
+
+    <!-- Configuration MongoDB pour MapReduce -->
+    <property>
+        <n>mongo.job.input.format</n>
+        <value>com.mongodb.hadoop.MongoInputFormat</value>
+        <description>Format d'entrée pour lire depuis MongoDB.</description>
+    </property>
+
+    <property>
+        <n>mongo.job.output.format</n>
+        <value>com.mongodb.hadoop.MongoOutputFormat</value>
+        <description>Format de sortie pour écrire vers MongoDB.</description>
+    </property>
+
+</configuration>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Configuration HDFS - Hadoop Distributed File System -->
+<!-- Paramètres pour le stockage distribué des données -->
+
+<configuration>
+    <!-- Facteur de réplication des données -->
+    <property>
+        <n>dfs.replication</n>
+        <value>2</value>
+        <description>
+            Nombre de répliques pour chaque bloc de données.
+            Avec 3 DataNodes, on utilise une réplication de 2 pour équilibrer
+            redondance et utilisation de l'espace disque.
+        </description>
+    </property>
+
+    <!-- Taille des blocs HDFS -->
+    <property>
+        <n>dfs.blocksize</n>
+        <value>134217728</value>
+        <description>
+            Taille des blocs HDFS en octets (128MB).
+            Blocs plus grands = moins de métadonnées mais moins de parallélisme.
+        </description>
+    </property>
+
+    <!-- Répertoire des données NameNode -->
+    <property>
+        <n>dfs.namenode.name.dir</n>
+        <value>file:///opt/hadoop/data/dfs/name</value>
+        <description>
+            Répertoire où le NameNode stocke ses métadonnées.
+            CRITIQUE : contient l'arbre des fichiers et les emplacements des blocs.
+        </description>
+    </property>
+
+    <!-- Répertoire des données DataNode -->
+    <property>
+        <n>dfs.datanode.data.dir</n>
+        <value>file:///opt/hadoop/data/dfs/data</value>
+        <description>
+            Répertoire où les DataNodes stockent les blocs de données.
+            Peut contenir plusieurs répertoires séparés par des virgules.
+        </description>
+    </property>
+
+    <!-- Répertoire des checkpoints SecondaryNameNode -->
+    <property>
+        <n>dfs.namenode.checkpoint.dir</n>
+        <value>file:///opt/hadoop/data/dfs/namesecondary</value>
+        <description>
+            Répertoire pour les checkpoints du SecondaryNameNode.
+            Utilisé pour la sauvegarde périodique des métadonnées.
+        </description>
+    </property>
+
+    <!-- Adresse du SecondaryNameNode -->
+    <property>
+        <n>dfs.namenode.secondary.http-address</n>
+        <value>hadoop-secondary:9868</value>
+        <description>
+            Adresse HTTP du SecondaryNameNode.
+            Interface web pour monitoring des checkpoints.
+        </description>
+    </property>
+
+    <!-- Adresse HTTP du NameNode -->
+    <property>
+        <n>dfs.namenode.http-address</n>
+        <value>0.0.0.0:9870</value>
+        <description>
+            Interface web du NameNode pour monitoring HDFS.
+            Accessible depuis l'extérieur du conteneur.
+        </description>
+    </property>
+
+    <!-- Permissions par défaut des fichiers -->
+    <property>
+        <n>dfs.permissions.enabled</n>
+        <value>false</value>
+        <description>
+            Désactive les permissions HDFS pour simplifier le développement.
+            En production, mettre à 'true' pour plus de sécurité.
+        </description>
+    </property>
+
+    <!-- Configuration WebHDFS -->
+    <property>
+        <n>dfs.webhdfs.enabled</n>
+        <value>true</value>
+        <description>
+            Active l'API REST WebHDFS pour accès HTTP aux données HDFS.
+            Utile pour l'intégration avec des applications web.
+        </description>
+    </property>
+
+    <!-- Intervalle des checkpoints -->
+    <property>
+        <n>dfs.namenode.checkpoint.period</n>
+        <value>3600</value>
+        <description>
+            Intervalle entre les checkpoints en secondes (1 heure).
+            Fréquence de sauvegarde des métadonnées NameNode.
+        </description>
+    </property>
+
+    <!-- Seuil des transactions pour checkpoint -->
+    <property>
+        <n>dfs.namenode.checkpoint.txns</n>
+        <value>1000000</value>
+        <description>
+            Nombre de transactions avant checkpoint forcé.
+            Évite l'accumulation excessive de logs.
+        </description>
+    </property>
+
+    <!-- Configuration du DataNode -->
+    <property>
+        <n>dfs.datanode.address</n>
+        <value>0.0.0.0:9866</value>
+        <description>Port d'écoute des DataNodes pour transferts de données.</description>
+    </property>
+
+    <property>
+        <n>dfs.datanode.http.address</n>
+        <value>0.0.0.0:9864</value>
+        <description>Interface web des DataNodes.</description>
+    </property>
+
+    <property>
+        <n>dfs.datanode.ipc.address</n>
+        <value>0.0.0.0:9867</value>
+        <description>Port IPC des DataNodes.</description>
+    </property>
+
+    <!-- Optimisations performance -->
+    <property>
+        <n>dfs.namenode.handler.count</n>
+        <value>20</value>
+        <description>
+            Nombre de threads pour traiter les requêtes clients au NameNode.
+            Plus de threads = meilleure concurrence.
+        </description>
+    </property>
+
+    <property>
+        <n>dfs.datanode.handler.count</n>
+        <value>10</value>
+        <description>Nombre de threads pour les DataNodes.</description>
+    </property>
+
+</configuration>
