@@ -1,0 +1,41 @@
+# Requirements pour l'application Flask Big Data
+# Version Python: 3.10+
+
+# Framework web
+Flask==2.3.3
+Werkzeug==2.3.7
+
+# Base de données et connecteurs
+pymongo==4.5.0
+motor==3.3.2
+
+# Traitement de données
+pandas==2.0.3
+numpy==1.24.3
+
+# Requêtes HTTP
+requests==2.31.0
+urllib3==2.0.4
+
+# Templating et assets
+Jinja2==3.1.2
+MarkupSafe==2.1.3
+
+# Développement et débogage
+python-dotenv==1.0.0
+
+# Sécurité
+itsdangerous==2.1.2
+
+# Formatage et validation
+python-dateutil==2.8.2
+
+# Logging avancé
+colorlog==6.7.0
+
+# Performance et cache
+gunicorn==21.2.0
+
+# Utilitaires
+click==8.1.7
+blinker==1.6.3

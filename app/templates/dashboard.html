@@ -1,0 +1,576 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Big Data Analytics{% endblock %}
+
+{% block content %}
+<!-- Dashboard Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="display-6 fw-bold mb-0">
+            <i class="fas fa-chart-pie me-3 text-primary"></i>
+            Dashboard Analytics
+        </h1>
+        <p class="text-muted mb-0">Vue d'ensemble des analyses Big Data</p>
+    </div>
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-outline-primary" onclick="refreshAllData()">
+            <i class="fas fa-sync me-2"></i>Actualiser
+        </button>
+        <button type="button" class="btn btn-outline-success" onclick="exportDashboard()">
+            <i class="fas fa-download me-2"></i>Exporter
+        </button>
+    </div>
+</div>
+
+<!-- Analytics Tabs -->
+<ul class="nav nav-tabs mb-4" id="analyticsTab" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="pig-tab" data-bs-toggle="tab" data-bs-target="#pig-content" type="button" role="tab">
+            <i class="fas fa-pig me-2"></i>Analyses Pig
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="spark-tab" data-bs-toggle="tab" data-bs-target="#spark-content" type="button" role="tab">
+            <i class="fas fa-bolt me-2"></i>Analyses Spark
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="mongodb-tab" data-bs-toggle="tab" data-bs-target="#mongodb-content" type="button" role="tab">
+            <i class="fas fa-leaf me-2"></i>Données MongoDB
+        </button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="comparison-tab" data-bs-toggle="tab" data-bs-target="#comparison-content" type="button" role="tab">
+            <i class="fas fa-balance-scale me-2"></i>Comparaisons
+        </button>
+    </li>
+</ul>
+
+<!-- Tab Content -->
+<div class="tab-content" id="analyticsTabContent">
+    <!-- Pig Analysis Tab -->
+    <div class="tab-pane fade show active" id="pig-content" role="tabpanel">
+        <div class="row">
+            <!-- Department Analysis -->
+            <div class="col-lg-8 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-building me-2 text-warning"></i>
+                            Analyse par département (Apache Pig)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="departmentChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Age Group Analysis -->
+            <div class="col-lg-4 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-users me-2 text-info"></i>
+                            Répartition par âge
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="ageGroupChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Salary Statistics -->
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-dollar-sign me-2 text-success"></i>
+                            Statistiques salariales détaillées
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="salaryTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Département</th>
+                                        <th>Employés</th>
+                                        <th>Salaire moyen</th>
+                                        <th>Salaire total</th>
+                                        <th>% du total</th>
+                                        <th>Tendance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Données chargées dynamiquement -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Spark Analysis Tab -->
+    <div class="tab-pane fade" id="spark-content" role="tabpanel">
+        <div class="row">
+            <!-- Customer Segmentation -->
+            <div class="col-lg-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-chart-pie me-2 text-primary"></i>
+                            Segmentation clients RFM (Spark)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="customerSegmentChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Regional Performance -->
+            <div class="col-lg-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-globe me-2 text-danger"></i>
+                            Performance régionale
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="regionalChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Performance Table -->
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-box me-2 text-info"></i>
+                            Performance des produits (Spark Analytics)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="productTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Produit</th>
+                                        <th>Ventes (€)</th>
+                                        <th>Unités vendues</th>
+                                        <th>Marge (%)</th>
+                                        <th>Tendance</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Données chargées dynamiquement -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MongoDB Data Tab -->
+    <div class="tab-pane fade" id="mongodb-content" role="tabpanel">
+        <div class="row">
+            <!-- Recent Transactions -->
+            <div class="col-lg-8 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="card-title mb-0">
+                                <i class="fas fa-leaf me-2 text-success"></i>
+                                Transactions récentes (MongoDB)
+                            </h5>
+                            <button class="btn btn-sm btn-outline-success" onclick="refreshMongoData()">
+                                <i class="fas fa-sync me-1"></i>Actualiser
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="mongoTransactionsTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Transaction</th>
+                                        <th>Produit</th>
+                                        <th>Client</th>
+                                        <th>Montant</th>
+                                        <th>Région</th>
+                                        <th>Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Données MongoDB -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Top Customers -->
+            <div class="col-lg-4 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-crown me-2 text-warning"></i>
+                            Top clients
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="topCustomersList">
+                            <!-- Liste des top clients -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Comparison Tab -->
+    <div class="tab-pane fade" id="comparison-content" role="tabpanel">
+        <div class="row">
+            <!-- Technology Comparison -->
+            <div class="col-12 mb-4">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-balance-scale me-2 text-secondary"></i>
+                            Comparaison des technologies Big Data
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="technologyComparisonChart" height="200"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Performance Metrics -->
+            <div class="col-lg-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-tachometer-alt me-2 text-info"></i>
+                            Métriques de performance
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-6 mb-3">
+                                <div class="metric-item p-3">
+                                    <h3 class="text-warning" id="pig-processing-time">2.5s</h3>
+                                    <small class="text-muted">Temps traitement Pig</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="metric-item p-3">
+                                    <h3 class="text-info" id="spark-processing-time">0.8s</h3>
+                                    <small class="text-muted">Temps traitement Spark</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="metric-item p-3">
+                                    <h3 class="text-success" id="mongodb-query-time">50ms</h3>
+                                    <small class="text-muted">Temps requête MongoDB</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="metric-item p-3">
+                                    <h3 class="text-danger" id="hdfs-throughput">120MB/s</h3>
+                                    <small class="text-muted">Débit HDFS</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Resources -->
+            <div class="col-lg-6 mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-header bg-transparent border-0">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-server me-2 text-primary"></i>
+                            Ressources système
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="resourceUsageChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Variables globales pour les graphiques
+let charts = {};
+
+// Fonction pour actualiser toutes les données
+function refreshAllData() {
+    const button = event.target;
+    const originalText = button.innerHTML;
+    
+    button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Actualisation...';
+    button.disabled = true;
+    
+    // Recharger tous les onglets
+    loadPigAnalytics();
+    loadSparkAnalytics();
+    loadMongoDBData();
+    
+    setTimeout(() => {
+        button.innerHTML = originalText;
+        button.disabled = false;
+        showSuccess('Données actualisées avec succès');
+    }, 2000);
+}
+
+// Charger les analyses Pig
+async function loadPigAnalytics() {
+    try {
+        const response = await fetch('/api/analytics/pig-results');
+        const data = await response.json();
+        
+        createDepartmentChart(data.department_analysis);
+        createAgeGroupChart(data.age_group_analysis);
+        populateSalaryTable(data.department_analysis);
+        
+    } catch (error) {
+        console.error('Erreur chargement Pig:', error);
+        showError('Erreur lors du chargement des analyses Pig');
+    }
+}
+
+// Charger les analyses Spark
+async function loadSparkAnalytics() {
+    try {
+        const response = await fetch('/api/analytics/spark-results');
+        const data = await response.json();
+        
+        createCustomerSegmentChart(data.customer_segments);
+        createRegionalChart(data.regional_performance);
+        populateProductTable(data.product_performance);
+        
+    } catch (error) {
+        console.error('Erreur chargement Spark:', error);
+        showError('Erreur lors du chargement des analyses Spark');
+    }
+}
+
+// Charger les données MongoDB
+async function loadMongoDBData() {
+    try {
+        const response = await fetch('/api/mongodb/collections');
+        const data = await response.json();
+        
+        if (data.sales) {
+            populateMongoTransactionsTable(data.sales.sample);
+        }
+        
+        if (data.customers) {
+            populateTopCustomers(data.customers.sample);
+        }
+        
+    } catch (error) {
+        console.error('Erreur chargement MongoDB:', error);
+        showError('Erreur lors du chargement des données MongoDB');
+    }
+}
+
+// Créer le graphique des départements
+function createDepartmentChart(data) {
+    const ctx = document.getElementById('departmentChart').getContext('2d');
+    
+    if (charts.department) {
+        charts.department.destroy();
+    }
+    
+    charts.department = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.map(d => d.department),
+            datasets: [
+                {
+                    label: 'Nombre d\'employés',
+                    data: data.map(d => d.employees),
+                    backgroundColor: 'rgba(54, 162, 235, 0.8)',
+                    yAxisID: 'y'
+                },
+                {
+                    label: 'Salaire moyen (€)',
+                    data: data.map(d => d.avg_salary),
+                    backgroundColor: 'rgba(255, 99, 132, 0.8)',
+                    yAxisID: 'y1'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                },
+                y1: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+                    grid: {
+                        drawOnChartArea: false,
+                    },
+                }
+            }
+        }
+    });
+}
+
+// Créer le graphique des tranches d'âge
+function createAgeGroupChart(data) {
+    const ctx = document.getElementById('ageGroupChart').getContext('2d');
+    
+    if (charts.ageGroup) {
+        charts.ageGroup.destroy();
+    }
+    
+    charts.ageGroup = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: data.map(d => d.age_group),
+            datasets: [{
+                data: data.map(d => d.count),
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.8)',
+                    'rgba(54, 162, 235, 0.8)',
+                    'rgba(255, 206, 86, 0.8)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+
+// Populer le tableau des salaires
+function populateSalaryTable(data) {
+    const tbody = document.querySelector('#salaryTable tbody');
+    tbody.innerHTML = '';
+    
+    const total = data.reduce((sum, d) => sum + d.total_salary, 0);
+    
+    data.forEach(dept => {
+        const row = document.createElement('tr');
+        const percentage = ((dept.total_salary / total) * 100).toFixed(1);
+        
+        row.innerHTML = `
+            <td><strong>${dept.department}</strong></td>
+            <td><span class="badge bg-primary">${dept.employees}</span></td>
+            <td>€${dept.avg_salary.toLocaleString()}</td>
+            <td>€${dept.total_salary.toLocaleString()}</td>
+            <td>${percentage}%</td>
+            <td><i class="fas fa-arrow-up text-success"></i></td>
+        `;
+        tbody.appendChild(row);
+    });
+}
+
+// Créer le graphique de segmentation client
+function createCustomerSegmentChart(data) {
+    const ctx = document.getElementById('customerSegmentChart').getContext('2d');
+    
+    if (charts.customerSegment) {
+        charts.customerSegment.destroy();
+    }
+    
+    charts.customerSegment = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: data.map(d => d.segment),
+            datasets: [{
+                data: data.map(d => d.count),
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.8)',
+                    'rgba(75, 192, 192, 0.8)',
+                    'rgba(153, 102, 255, 0.8)',
+                    'rgba(255, 159, 64, 0.8)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+
+// Fonctions utilitaires
+function showSuccess(message) {
+    showAlert(message, 'success');
+}
+
+function showError(message) {
+    showAlert(message, 'danger');
+}
+
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    const container = document.querySelector('main');
+    container.insertBefore(alertDiv, container.firstChild);
+    
+    setTimeout(() => {
+        if (alertDiv.parentNode) {
+            alertDiv.remove();
+        }
+    }, 5000);
+}
+
+function exportDashboard() {
+    showSuccess('Export en cours de développement');
+}
+
+function refreshMongoData() {
+    loadMongoDBData();
+}
+
+// Initialisation
+document.addEventListener('DOMContentLoaded', function() {
+    loadPigAnalytics();
+    loadSparkAnalytics();
+    loadMongoDBData();
+});
+</script>
+{% endblock %}

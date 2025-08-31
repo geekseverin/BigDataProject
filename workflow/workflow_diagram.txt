@@ -1,0 +1,208 @@
+====================================================
+        DIAGRAMME DE WORKFLOW - PROJET BIG DATA
+====================================================
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                           ARCHITECTURE GLOBALE                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   DATA SOURCES  │───▶│   INGESTION     │───▶│   PROCESSING    │
+│                 │    │                 │    │                 │
+│ • CSV Files     │    │ • HDFS Upload   │    │ • Apache Pig    │
+│ • MongoDB       │    │ • MongoDB Load  │    │ • Apache Spark  │
+│ • Streaming     │    │ • Batch Process │    │ • MapReduce     │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                        │                        │
+         ▼                        ▼                        ▼
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   FLASK WEB     │◀───│   STORAGE       │◀───│   ANALYTICS     │
+│                 │    │                 │    │                 │
+│ • Dashboard     │    │ • HDFS Results  │    │ • Statistics    │
+│ • Visualizations│    │ • MongoDB Cache │    │ • Aggregations  │
+│ • REST APIs     │    │ • File System   │    │ • ML Insights   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+
+====================================================
+           WORKFLOW DÉTAILLÉ ÉTAPE PAR ÉTAPE
+====================================================
+
+PHASE 1: INITIALISATION
+┌─────────────────────────────────────────────────────────────┐
+│ 1. 🐳 Docker Compose Build & Start                          │
+│    ├── hadoop-master (NameNode + ResourceManager)          │
+│    ├── hadoop-secondary (SecondaryNameNode)                │
+│    ├── hadoop-worker-1,2,3 (DataNode + NodeManager)       │
+│    ├── spark-master + spark-worker-1,2                     │
+│    ├── mongodb (Database + MongoDB Express)                │
+│    └── web-app (Flask Application)                         │
+│                                                            │
+│ 2. 🔧 Services Initialization                              │
+│    ├── Hadoop HDFS Format & Start                         │
+│    ├── Spark Cluster Configuration                        │
+│    ├── MongoDB Database & Collections Setup               │
+│    └── Network & Volume Configuration                     │
+└─────────────────────────────────────────────────────────────┘
+
+PHASE 2: INGESTION DES DONNÉES
+┌─────────────────────────────────────────────────────────────┐
+│ 1. 📁 CSV Data Ingestion                                   │
+│    sample_data.csv ───▶ HDFS:/data/input/                 │
+│    sales_data.csv  ───▶ HDFS:/data/input/                 │
+│                                                            │
+│ 2. 🍃 MongoDB Data Ingestion                               │
+│    JSON Documents ───▶ MongoDB Collections                │
+│    ├── sales (transactions avec métadonnées)              │
+│    ├── customers (profils clients)                        │
+│    └── products (catalogue produits)                      │
+│                                                            │
+│ 3. 🔍 Data Validation & Schema Check                       │
+│    ├── Vérification intégrité des données                 │
+│    ├── Nettoyage des valeurs nulles/aberrantes           │
+│    └── Standardisation des formats                        │
+└─────────────────────────────────────────────────────────────┘
+
+PHASE 3: TRAITEMENT AVEC APACHE PIG
+┌─────────────────────────────────────────────────────────────┐
+│ 1. 🐷 Employee Data Analysis (data_analysis.pig)           │
+│    HDFS:/data/input/sample_data.csv                       │
+│    ├── Statistiques par département                       │
+│    ├── Analyse des tranches d'âge                         │
+│    ├── Répartition salariale                              │
+│    ├── Analyse géographique (villes)                      │
+│    └── Top 10 employés les mieux payés                    │
+│    Results ───▶ HDFS:/data/output/pig/                    │
+│                                                            │
+│ 2. 🐷 Sales Data Analysis (sales_analysis.pig)            │
+│    HDFS:/data/input/sales_data.csv                        │
+│    ├── KPI globaux de ventes                              │
+│    ├── Performance par catégorie produit                  │
+│    ├── Analyse régionale                                  │
+│    ├── Performance des vendeurs                           │
+│    ├── Tendances temporelles                              │
+│    └── Détection d'anomalies                              │
+│    Results ───▶ HDFS:/data/output/pig/                    │
+└─────────────────────────────────────────────────────────────┘
+
+PHASE 4: TRAITEMENT AVEC APACHE SPARK
+┌─────────────────────────────────────────────────────────────┐
+│ 1. ⚡ Advanced Data Processing (data_processing.py)        │
+│    HDFS:/data/input/*.csv                                 │
+│    ├── Window Functions pour analyses avancées            │
+│    ├── Segmentation de performance employés               │
+│    ├── Calculs de percentiles et rankings                 │
+│    ├── Analyses cohort et RFM                             │
+│    └── Machine Learning préparatoire                      │
+│    Results ───▶ HDFS:/data/output/spark/                  │
+│                                                            │
+│ 2. ⚡ MongoDB Integration (mongodb_reader.py)              │
+│    MongoDB:bigdata.* ◀───▶ Spark DataFrames              │
+│    ├── Lecture collections MongoDB                        │
+│    ├── Transformations complexes                          │
+│    ├── Agrégations multi-dimensionnelles                 │
+│    ├── Jointures cross-platform                          │
+│    └── Sauvegarde résultats vers MongoDB                 │
+│    Results ───▶ MongoDB:bigdata.results                   │
+└─────────────────────────────────────────────────────────────┘
+
+PHASE 5: VISUALISATION ET APIs
+┌─────────────────────────────────────────────────────────────┐
+│ 1. 🌐 Flask Web Application                                │
+│    ├── Route: / (Homepage with overview)                  │
+│    ├── Route: /dashboard (Advanced analytics)             │
+│    ├── API: /api/sales/by-region                          │
+│    ├── API: /api/sales/by-category                        │
+│    ├── API: /api/analytics/pig-results                    │
+│    ├── API: /api/analytics/spark-results                  │
+│    ├── API: /api/mongodb/collections                      │
+│    └── API: /api/system/status                            │
+│                                                            │
+│ 2. 📊 Data Visualization                                   │
+│    ├── Chart.js pour graphiques interactifs              │
+│    ├── Bootstrap pour interface responsive                │
+│    ├── Tableaux dynamiques avec pagination               │
+│    ├── Export CSV/JSON                                     │
+│    └── Monitoring temps réel                              │
+└─────────────────────────────────────────────────────────────┘
+
+====================================================
+               FLUX DE DONNÉES DÉTAILLÉ
+====================================================
+
+1. DATA INGESTION FLOW
+   CSV Files ──┐
+               ├─▶ HDFS ──┐
+   MongoDB ────┤          ├─▶ Processing Layer
+   Streaming ──┘          │
+                         ▼
+2. PROCESSING FLOW        
+   ┌─────────────────────────────────────┐
+   │     Pig Scripts     │ Spark Scripts │
+   │ ├─ Descriptive     │ ├─ Predictive │
+   │ ├─ Aggregation    │ ├─ ML Ready   │
+   │ └─ Statistical    │ └─ Real-time  │
+   └─────────────────────────────────────┘
+                         │
+                         ▼
+3. RESULTS STORAGE
+   ┌─ HDFS:/data/output/pig/
+   ├─ HDFS:/data/output/spark/
+   └─ MongoDB:bigdata.results
+                         │
+                         ▼
+4. VISUALIZATION
+   ┌─ REST APIs ──▶ JSON Data
+   ├─ Web Dashboard ──▶ Interactive Charts  
+   └─ Export Functions ──▶ CSV/Excel
+
+====================================================
+                  COMMANDES D'EXÉCUTION
+====================================================
+
+# 1. Démarrage complet
+docker-compose up --build -d
+./scripts/run_all.sh
+
+# 2. Initialisation étape par étape
+./scripts/setup/init-hadoop.sh
+./scripts/setup/init-spark.sh  
+./scripts/setup/load-data.sh
+
+# 3. Lancement des analyses
+# Pig Analysis
+docker exec hadoop-master pig scripts/pig/data_analysis.pig
+docker exec hadoop-master pig scripts/pig/sales_analysis.pig
+
+# Spark Analysis  
+docker exec spark-master spark-submit scripts/spark/data_processing.py
+docker exec spark-master spark-submit scripts/spark/mongodb_reader.py
+
+# 4. Accès aux interfaces
+# Application Web: http://localhost:5000
+# Hadoop NameNode: http://localhost:9870
+# Spark Master: http://localhost:8080
+# MongoDB Express: http://localhost:8090
+
+====================================================
+                MONITORING & LOGGING
+====================================================
+
+📊 Métriques surveillées:
+├─ HDFS: Utilisation stockage, santé DataNodes
+├─ Spark: Applications actives, utilisation ressources  
+├─ MongoDB: Connexions, performances requêtes
+└─ Flask: Temps réponse APIs, erreurs HTTP
+
+📝 Logs disponibles:
+├─ docker logs [container_name]
+├─ HDFS: /opt/hadoop/logs/
+├─ Spark: /opt/bitnami/spark/logs/
+└─ Application: ./logs/run_all.log
+
+🔄 Santé système:
+└─ API /api/system/status (temps réel)
+
+====================================================
+Ce workflow assure un pipeline complet de traitement
+Big Data avec redondance, scalabilité et monitoring.
+====================================================

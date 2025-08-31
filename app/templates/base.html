@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Big Data Analytics - UCAO 2025{% endblock %}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet">
+    
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-database me-2"></i>
+                Big Data Analytics
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.endpoint == 'index' }}" href="{{ url_for('index') }}">
+                            <i class="fas fa-home me-1"></i>Accueil
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ 'active' if request.endpoint == 'dashboard' }}" href="{{ url_for('dashboard') }}">
+                            <i class="fas fa-chart-pie me-1"></i>Dashboard
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="servicesDropdown" role="button" data-bs-toggle="dropdown">
+                            <i class="fas fa-cogs me-1"></i>Services
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="http://localhost:9870" target="_blank">
+                                <i class="fas fa-hdd me-2"></i>Hadoop NameNode
+                            </a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8080" target="_blank">
+                                <i class="fas fa-bolt me-2"></i>Spark Master
+                            </a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8090" target="_blank">
+                                <i class="fas fa-leaf me-2"></i>MongoDB Express
+                            </a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8088" target="_blank">
+                                <i class="fas fa-tasks me-2"></i>YARN ResourceManager
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Alerts -->
+    <div class="container mt-3">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show" role="alert">
+                        {% if category == 'error' %}
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                        {% elif category == 'success' %}
+                            <i class="fas fa-check-circle me-2"></i>
+                        {% elif category == 'info' %}
+                            <i class="fas fa-info-circle me-2"></i>
+                        {% endif %}
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
+
+    <!-- Main Content -->
+    <main class="container-fluid py-4">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-graduation-cap me-2"></i>Projet Big Data UCAO</h5>
+                    <p class="mb-0">Master 1 - Traitement Distribué 2024-2025</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h5><i class="fas fa-tools me-2"></i>Technologies</h5>
+                    <div class="d-flex justify-content-md-end flex-wrap gap-3">
+                        <span class="badge bg-warning"><i class="fas fa-elephant me-1"></i>Hadoop</span>
+                        <span class="badge bg-info"><i class="fas fa-fire me-1"></i>Spark</span>
+                        <span class="badge bg-success"><i class="fas fa-leaf me-1"></i>MongoDB</span>
+                        <span class="badge bg-danger"><i class="fab fa-python me-1"></i>Flask</span>
+                        <span class="badge bg-secondary"><i class="fab fa-docker me-1"></i>Docker</span>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="row">
+                <div class="col-md-6">
+                    <small>© 2025 UCAO - Tous droits réservés</small>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <small>
+                        <span id="system-status" class="badge bg-secondary">
+                            <i class="fas fa-circle me-1"></i>Vérification du statut...
+                        </span>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    
+    <!-- Vérification du statut système -->
+    <script>
+        // Vérifier le statut du système toutes les 30 secondes
+        function checkSystemStatus() {
+            fetch('/api/system/status')
+                .then(response => response.json())
+                .then(data => {
+                    const statusElement = document.getElementById('system-status');
+                    let connectedServices = 0;
+                    let totalServices = 0;
+                    
+                    Object.keys(data).forEach(service => {
+                        if (service !== 'error') {
+                            totalServices++;
+                            if (data[service].status === 'connected') {
+                                connectedServices++;
+                            }
+                        }
+                    });
+                    
+                    if (connectedServices === totalServices) {
+                        statusElement.className = 'badge bg-success';
+                        statusElement.innerHTML = '<i class="fas fa-check-circle me-1"></i>Tous services OK';
+                    } else if (connectedServices > 0) {
+                        statusElement.className = 'badge bg-warning';
+                        statusElement.innerHTML = `<i class="fas fa-exclamation-triangle me-1"></i>${connectedServices}/${totalServices} services`;
+                    } else {
+                        statusElement.className = 'badge bg-danger';
+                        statusElement.innerHTML = '<i class="fas fa-times-circle me-1"></i>Services hors ligne';
+                    }
+                })
+                .catch(error => {
+                    const statusElement = document.getElementById('system-status');
+                    statusElement.className = 'badge bg-danger';
+                    statusElement.innerHTML = '<i class="fas fa-exclamation-circle me-1"></i>Erreur statut';
+                });
+        }
+        
+        // Vérifier au chargement de la page et toutes les 30s
+        checkSystemStatus();
+        setInterval(checkSystemStatus, 30000);
+    </script>
+    
+    {% block scripts %}{% endblock %}
+</body>
+</html>
